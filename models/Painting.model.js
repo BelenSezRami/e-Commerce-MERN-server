@@ -12,7 +12,7 @@ const paintingSchema = new Schema(
             default: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
             required: [false, 'La imagen es obligatoria']
         },
-        heigh: {
+        height: {
             type: Number,
             required: [true, 'La altura es obligatoria']
         },
@@ -20,15 +20,28 @@ const paintingSchema = new Schema(
             type: Number,
             required: [true, 'El ancho es obligatorio']
         },
-        technique: {
-            type: String,
-            required: [true, 'La técnica es obligatoria']
+        techniques: {
+            type: [String],
+            required: [true, 'Al menos una técnica es obligatoria'],
+            enum: [
+                'Óleo sobre lienzo',
+                'Espátula',
+                'Carboncillo',
+                'Acuarela',
+                'Témpera',
+                'Tinta',
+                'Pan de oro',
+                'Serrín',
+                'Arena',
+                'Yeso',
+                'Pigmento en polvo'
+            ]
         },
         description: {
             type: String,
         },
         year: {
-            type: Date,
+            type: Number,
             required: [true, 'El año de creación es obligatorio']
         },
         price: {
@@ -38,7 +51,7 @@ const paintingSchema = new Schema(
         sold: {
             type: Boolean,
             default: false,
-            required: [true, 'Debe indicar si el cuadro está vendido o no']
+            required: [true, 'Por favor, indique si el cuadro está vendido o no']
         }
     },
     {
