@@ -28,9 +28,9 @@ router.get('/getOnePainting/:painting_id', (req, res, next) => {
 
 router.post('/savePainting', (req, res, next) => {
 
-  const { title, image, height, width, technique, description, year, price, sold } = req.body
+  const { title, image, height, width, techniques, description, year, price, sold } = req.body
   Painting
-    .create({ title, image, height, width, technique, description, year, price, sold })
+    .create({ title, image, height, width, techniques, description, year, price, sold })
     .then(response => res.json(response))
     .catch(err => next(err))
 })

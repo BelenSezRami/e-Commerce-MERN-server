@@ -10,7 +10,7 @@ const paintingSchema = new Schema(
         image: {
             type: String,
             default: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
-            required: [false, 'La imagen es obligatoria']
+            required: [false]
         },
         height: {
             type: Number,
