@@ -24,17 +24,18 @@ const paintingSchema = new Schema(
             type: [String],
             required: [true, 'Al menos una técnica es obligatoria'],
             enum: [
-                'Óleo sobre lienzo',
-                'Espátula',
-                'Carboncillo',
                 'Acuarela',
+                'Arena',
+                'Barniz',
+                'Carboncillo',
+                'Espátula',
+                'Óleo sobre lienzo',
+                'Pan de oro',
+                'Pigmento en polvo',
+                'Serrín',
                 'Témpera',
                 'Tinta',
-                'Pan de oro',
-                'Serrín',
-                'Arena',
-                'Yeso',
-                'Pigmento en polvo'
+                'Yeso'
             ]
         },
         description: {
