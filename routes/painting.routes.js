@@ -21,7 +21,7 @@ router.get('/getOnePainting/:painting_id', (req, res, next) => {
   Painting
     .findById(painting_id)
     .then(response => res.json(response))
-    .catch(err => next.json(err))
+    .catch(err => next(err))
 })
 
 
