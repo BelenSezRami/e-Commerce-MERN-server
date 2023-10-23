@@ -1,7 +1,12 @@
+const mongoose = require("mongoose")
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, 'El nombre es obligatorio']
+    },
     email: {
       type: String,
       required: [true, 'El email es obligatorio.'],
@@ -14,14 +19,10 @@ const userSchema = new Schema(
       required: [true, 'La contraseña es obligatoria.'],
       minlength: [5, 'La contraseña tiene que tener al menos 5 caracteres.'],
     },
-    name: {
+    avatar: {
       type: String,
-      required: [true, 'El nombre es obligatorio']
-    },
-    image: {
-      type: String,
-      default: 'https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png',
-      required: [false]
+      required: [false],
+      default: 'https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png'
     },
     role: {
       type: String,
