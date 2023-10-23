@@ -8,6 +8,8 @@ router.get('/getAllPaintings', (req, res, next) => {
 
   Painting
     .find()
+    .select({ title: 1, image: 1 })
+    .sort({ year: 1, title: 1 })
     .then(response => res.json(response))
     .catch(err => next(err))
 })
