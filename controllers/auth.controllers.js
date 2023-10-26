@@ -2,7 +2,7 @@ const User = require('../models/User.model')
 
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
-// const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 
 //SIGN UP
@@ -39,10 +39,50 @@ const signup = (req, res, next) => {
 }
 
 
-//LOG IN
+//LOGIN
+const login = (req, res, next) => {
+
+    const { email, password } = req.body
+
+    if (email === '' || password === '') {
+        res.json({ message: 'Introduce un email válido y/o una contraseña válida.' })
+        return
+    }
+
+    User
+        .findOne({ email })
+        .then((foundUser) => {
+
+            if (!foundUser) {
+                res.status(401).json({ message: 'Usuario no encontrado.' })
+                return
+            }
+
+            if (bcrypt.compareSync(password, foundUser.password)) {
+
+                const { _id, email, name } = foundUser
+
+                const payload = { _id, email, name }
+
+                const authToken = jwt.sign(
+                    payload,
+                    process.env.TOKEN_SECRET,
+                    { algorithm: 'HS256', expiresIn: '2h' }
+                )
+
+                res.json({ authToken: authToken })
+            }
+
+            else {
+                res.status(401).json({ message: 'No se ha podido autenticar el usuario' })
+            }
+        })
+        .catch(err => next(err))
+}
 
 
 
 module.exports = {
-    signup
+    signup,
+    login
 }
