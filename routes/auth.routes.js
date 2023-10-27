@@ -5,6 +5,6 @@ const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 
 router.post('/signup', signup)
 router.post('/login', login)
-router.get('/verify', verify, isAuthenticated)
+router.get('/verify', isAuthenticated, verify)
 
 module.exports = router

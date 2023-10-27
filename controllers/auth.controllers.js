@@ -82,7 +82,11 @@ const login = (req, res, next) => {
 
 //VERIFY
 const verify = (req, res, next) => {
-    res.json(req.payload)
+    console.log('EL USUARIO TIENE UN TOKEN CORRECTO Y SUS DATOS SON', req.payload)
+
+    setTimeout(() => {
+        res.status(200).json(req.payload)
+    }, 1500)
 }
 
 
