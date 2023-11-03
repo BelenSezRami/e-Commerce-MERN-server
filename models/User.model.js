@@ -28,7 +28,13 @@ const userSchema = new Schema(
       type: String,
       enum: ['USER', 'ADMIN'],
       default: 'USER'
-    }
+    },
+    favoritePaintings: [
+      {
+        ref: 'Painting',
+        type: Schema.Types.ObjectId
+      }
+    ]
   },
   {
     timestamps: true
