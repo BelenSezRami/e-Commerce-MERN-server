@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 //SIGN UP
 const signup = (req, res, next) => {
 
-    const { email, password, name, avatar, role } = req.body
+    const { email, password, name, lastName, avatar, role } = req.body
 
     if (password.length < 3) {
         res.status(400).json({ message: 'La contraseña debe tener al menos 3 caracteres.' })
@@ -27,11 +27,11 @@ const signup = (req, res, next) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ name, email, password: hashedPassword })
+            return User.create({ name, lastName, email, password: hashedPassword })
         })
         .then((createdUser) => {
-            const { _id, name, email, avatar, role } = createdUser
-            const user = { _id, name, email, role, avatar }
+            const { _id, name, lastName, email, avatar, role } = createdUser
+            const user = { _id, name, lastName, email, role, avatar }
 
             res.status(201).json({ user })
         })
@@ -60,9 +60,9 @@ const login = (req, res, next) => {
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, name } = foundUser
+                const { _id, email, name, lastName, role } = foundUser
 
-                const payload = { _id, email, name }
+                const payload = { _id, email, name, lastName, role }
 
                 const authToken = jwt.sign(
                     payload,
@@ -81,12 +81,10 @@ const login = (req, res, next) => {
 }
 
 //VERIFY
-const verify = (req, res, next) => {
-    console.log('EL USUARIO TIENE UN TOKEN CORRECTO Y SUS DATOS SON', req.payload)
+const verify = (req, res) => {
 
-    setTimeout(() => {
-        res.status(200).json(req.payload)
-    }, 1500)
+    res.status(200).json(req.payload)
+
 }
 
 
