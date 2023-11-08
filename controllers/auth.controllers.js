@@ -31,7 +31,7 @@ const signup = (req, res, next) => {
         })
         .then((createdUser) => {
             const { _id, name, lastName, email, avatar, role } = createdUser
-            const user = { _id, name, lastName, email, role, avatar }
+            const user = { _id, name, lastName, email, avatar, role }
 
             res.status(201).json({ user })
         })

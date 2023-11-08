@@ -49,24 +49,39 @@ const deleteUser = (req, res, next) => {
 
 
 //ADD PAINTING TO FAVORITE
-const addPaintingToFavorite = (req, res, next) => {
+const addPaintingToFavorites = (req, res, next) => {
 
     const { painting_id, user_id } = req.params
 
     User
         .findByIdAndUpdate(user_id, { $addToSet: { favoritePaintings: painting_id } }, { new: true })
-        .then(() => {
-            console.log('Painting added to favorites', painting_id, user_id);
-            res.status(200).json(user_id); // Devuelve el usuario actualizado como respuesta
+        .then((updatedUser) => {
+            console.log('Painting added to favorites', painting_id, user_id)
+            res.json(updatedUser)
         })
         .catch(err => {
-            console.error('Error adding painting to favorites:', err)
-            next(err)
+            res.status(500).json({ err: 'Error al agregar la pintura a favoritos', details: err.message });
         })
 }
 
 
 // //REMOVE PAINTING FROM FAVOURITE
+const removePaintingFromFavorites = (req, res, next) => {
+    const { userId, paintingId } = req.params
+
+    User.findByIdAndUpdate(
+        userId,
+        { $pull: { favoritePaintings: paintingId } },
+        { new: true }
+    )
+        .then(updatedUser => {
+            res.json(updatedUser)
+        })
+        .catch(err => {
+            res.status(500).json({ err: 'Error al eliminar la pintura de favoritos', details: err.message })
+        })
+}
+
 // const removeFavoritePainting = (req, res, next) => {
 
 //     const { painting_id } = req.params
@@ -83,6 +98,6 @@ module.exports = {
     getOneUser,
     editUser,
     deleteUser,
-    addPaintingToFavorite,
-    // removeFavoritePainting
+    addPaintingToFavorites,
+    removePaintingFromFavorites
 }
