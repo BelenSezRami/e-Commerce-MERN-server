@@ -1,17 +1,21 @@
+const router = require("express").Router()
 const User = require('../models/User.model')
 
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
 
+const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
+
+
 
 //SIGN UP
 const signup = (req, res, next) => {
 
-    const { email, password, name, lastName, avatar, role } = req.body
+    const { email, password, name, lastName, avatar } = req.body
 
     if (password.length < 3) {
-        res.status(400).json({ message: 'La contraseña debe tener al menos 3 caracteres.' })
+        res.sendStatus(400)
         return
     }
 
@@ -20,14 +24,14 @@ const signup = (req, res, next) => {
         .then((foundUser) => {
 
             if (foundUser) {
-                res.status(400).json({ message: 'El usuario ya existe.' })
+                res.sendStatus(400)
                 return
             }
 
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ name, lastName, email, password: hashedPassword })
+            return User.create({ name, lastName, email, password: hashedPassword, avatar })
         })
         .then((createdUser) => {
             const { _id, name, lastName, email, avatar, role } = createdUser
@@ -45,7 +49,7 @@ const login = (req, res, next) => {
     const { email, password } = req.body
 
     if (email === '' || password === '') {
-        res.json({ message: 'Introduce un email válido y/o una contraseña válida.' })
+        res.sendStatus(400)
         return
     }
 
@@ -54,15 +58,15 @@ const login = (req, res, next) => {
         .then((foundUser) => {
 
             if (!foundUser) {
-                res.status(401).json({ message: 'Usuario no encontrado.' })
+                res.sendStatus(401)
                 return
             }
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, name, lastName, role } = foundUser
+                const { _id, email, name, lastName, avatar, role } = foundUser
 
-                const payload = { _id, email, name, lastName, role }
+                const payload = { _id, email, name, lastName, avatar, role }
 
                 const authToken = jwt.sign(
                     payload,
@@ -74,18 +78,18 @@ const login = (req, res, next) => {
             }
 
             else {
-                res.status(401).json({ message: 'No se ha podido autenticar el usuario' })
+                res.sendStatus(401)
             }
         })
         .catch(err => next(err))
 }
 
 //VERIFY
-const verify = (req, res) => {
+const verify = ('/verify', isAuthenticated, (req, res, next) => {
 
     res.status(200).json(req.payload)
 
-}
+})
 
 
 
