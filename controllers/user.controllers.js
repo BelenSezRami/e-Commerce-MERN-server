@@ -12,7 +12,7 @@ const getAllUsers = (req, res, next) => {
 }
 
 
-//USER DETAILS
+//GET ONE USER
 const getOneUser = (req, res, next) => {
 
     const { user_id } = req.params
@@ -27,11 +27,14 @@ const getOneUser = (req, res, next) => {
 //EDIT USER
 const editUser = (req, res, next) => {
     const { name, lastName, avatar } = req.body
-    const { _id } = req.params
+    const { user_id } = req.params
 
     User
-        .findByIdAndUpdate(_id, { name, lastName, avatar })
-        .then(response => res.json({ editedUser: response.name, response }))
+        .findByIdAndUpdate(user_id, { name, lastName, avatar }, { new: true })
+        .then((editedUser) => {
+            const { user_id, name, lastName, avatar } = editedUser
+            res.status(201).json({ editedUser })
+        })
         .catch(err => next(err))
 }
 
