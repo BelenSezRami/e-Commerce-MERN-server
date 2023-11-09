@@ -7,7 +7,7 @@ const { getAllPaintings, getOnePainting, createPainting, editPainting, /*addPain
 router.get('/getAllPaintings', getAllPaintings)
 router.get('/getOnePainting/:painting_id', /*isAuthenticated,*/ getOnePainting)
 router.post('/createPainting', /*isAuthenticated,*/ createPainting)
-router.put('/editPainting',/*isAuthenticated,*/ editPainting)
+router.put('/editPainting/:painting_id',/*isAuthenticated,*/ editPainting)
 // router.put('/addPaintingToFavorite/:painting_id', isAuthenticated, addPaintingToFavorite)
 // router.put('/removePaintingFromFavorite/:painting_id', isAuthenticated, removeFavoritePainting)
 router.delete('/deletePainting/:painting_id',/*isAuthenticated,*/ deletePainting)
