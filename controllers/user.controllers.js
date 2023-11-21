@@ -63,20 +63,18 @@ const addPaintingToFavorites = (req, res, next) => {
             res.json(updatedUser)
         })
         .catch(err => {
-            res.status(500).json({ err: 'Error al agregar la pintura a favoritos', details: err.message });
+            res.status(500).json({ err: 'Error al agregar la pintura a favoritos', details: err.message })
         })
 }
 
 
 // //REMOVE PAINTING FROM FAVOURITE
 const removePaintingFromFavorites = (req, res, next) => {
-    const { userId, paintingId } = req.params
 
-    User.findByIdAndUpdate(
-        userId,
-        { $pull: { favoritePaintings: paintingId } },
-        { new: true }
-    )
+    const { user_id, painting_id } = req.params
+
+    User
+        .findByIdAndUpdate(user_id, { $pull: { favoritePaintings: painting_id } }, { new: true })
         .then(updatedUser => {
             res.json(updatedUser)
         })
@@ -84,17 +82,6 @@ const removePaintingFromFavorites = (req, res, next) => {
             res.status(500).json({ err: 'Error al eliminar la pintura de favoritos', details: err.message })
         })
 }
-
-// const removeFavoritePainting = (req, res, next) => {
-
-//     const { painting_id } = req.params
-//     const { user_id } = req.body
-
-//     User
-//         .findByIdAndUpdate(user_id, { $pull: { favoritePaintings: painting_id } }, { new: true })
-//         .then(() => res.sendStatus(204))
-//         .catch(err => next(err))
-// }
 
 module.exports = {
     getAllUsers,

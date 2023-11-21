@@ -7,7 +7,7 @@ router.get('/getAllUsers', getAllUsers)
 router.get('/getOneUser/:user_id', isAuthenticated, getOneUser)
 router.put('/editUser/:user_id', isAuthenticated, editUser)
 router.delete('/deleteUser/:user_id', isAuthenticated, deleteUser)
-router.put('/addPaintingToFavorite/:user_id/:painting_id', /*isAuthenticated,*/ addPaintingToFavorites)
-router.put('/removePaintingFromFavorite/:user_id/:painting_id', /*isAuthenticated,*/ removePaintingFromFavorites)
+router.put('/addPaintingToFavorites/:user_id/:painting_id', /*isAuthenticated,*/ addPaintingToFavorites)
+router.put('/removePaintingFromFavorites/:user_id/:painting_id', /*isAuthenticated,*/ removePaintingFromFavorites)
 
 module.exports = router
