@@ -12,7 +12,7 @@ const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 //SIGN UP
 const signup = (req, res, next) => {
 
-    const { email, password, name, lastName, avatar } = req.body
+    const { email, password, name, lastName, avatar, favoritePaintings } = req.body
 
     if (password.length < 3) {
         res.sendStatus(400)
@@ -31,11 +31,11 @@ const signup = (req, res, next) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ name, lastName, email, password: hashedPassword, avatar })
+            return User.create({ name, lastName, email, password: hashedPassword, avatar, favoritePaintings })
         })
         .then((createdUser) => {
-            const { _id, name, lastName, email, avatar, role } = createdUser
-            const user = { _id, name, lastName, email, avatar, role }
+            const { _id, name, lastName, email, avatar, role, favoritePaintings } = createdUser
+            const user = { _id, name, lastName, email, avatar, role, favoritePaintings }
 
             res.status(201).json({ user })
         })
@@ -64,9 +64,9 @@ const login = (req, res, next) => {
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, name, lastName, avatar, role } = foundUser
+                const { _id, email, name, lastName, avatar, role, favoritePaintings } = foundUser
 
-                const payload = { _id, email, name, lastName, avatar, role }
+                const payload = { _id, email, name, lastName, avatar, role, favoritePaintings }
 
                 const authToken = jwt.sign(
                     payload,

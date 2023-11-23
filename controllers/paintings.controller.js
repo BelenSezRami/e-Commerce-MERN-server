@@ -51,35 +51,6 @@ const editPainting = (req, res, next) => {
 }
 
 
-// // ADD PAINTING TO FAVOURITE
-// const addPaintingToFavorite = (req, res, next) => {
-
-//     const { painting_id } = req.params
-//     const { user_id } = req.body
-
-//     User
-//         .findByIdAndUpdate(user_id, { $addToSet: { favoritePaintings: painting_id } }, { new: true })
-//         .then(() => {
-//             console.log('Painting added to favorites', painting_id, user_id)
-//             res.sendStatus(204)
-//         })
-//         .catch(err => next(err))
-// }
-
-
-// //REMOVE PAINTING FROM FAVOURITE
-// const removeFavoritePainting = (req, res, next) => {
-
-//     const { painting_id } = req.params
-//     const { user_id } = req.body
-
-//     User
-//         .findByIdAndUpdate(user_id, { $pull: { favoritePaintings: painting_id } }, { new: true })
-//         .then(() => res.sendStatus(204))
-//         .catch(err => next(err))
-// }
-
-
 //DELETE PAINTING
 const deletePainting = (req, res, next) => {
 
@@ -97,7 +68,5 @@ module.exports = {
     getOnePainting,
     createPainting,
     editPainting,
-    // addPaintingToFavorite,
-    // removeFavoritePainting,
     deletePainting
 }
