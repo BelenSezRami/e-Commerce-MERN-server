@@ -19,6 +19,7 @@ const getOneUser = (req, res, next) => {
 
     User
         .findById(user_id)
+        .populate('favoritePaintings')
         .then((user) => res.json(user))
         .catch(err => next(err))
 }
