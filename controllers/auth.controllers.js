@@ -1,12 +1,9 @@
 const router = require("express").Router()
 const User = require('../models/User.model')
 
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
-const jwt = require('jsonwebtoken')
-
-const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
-
 
 
 //SIGN UP
@@ -85,11 +82,12 @@ const login = (req, res, next) => {
 }
 
 //VERIFY
-const verify = ('/verify', isAuthenticated, (req, res, next) => {
+const verify = (req, res, next) => {
+    console.log('EL USUARIO TIENE UN TOKEN CORRECTO Y SUS DATOS SON', req.payload)
 
     res.status(200).json(req.payload)
 
-})
+}
 
 
 
