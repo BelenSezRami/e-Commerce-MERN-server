@@ -69,7 +69,7 @@ const addPaintingToFavorites = (req, res, next) => {
 }
 
 
-// //REMOVE PAINTING FROM FAVOURITE
+//REMOVE PAINTING FROM FAVOURITE
 const removePaintingFromFavorites = (req, res, next) => {
 
     const { user_id, painting_id } = req.params
@@ -83,6 +83,7 @@ const removePaintingFromFavorites = (req, res, next) => {
             res.status(500).json({ err: 'Error al eliminar la pintura de favoritos', details: err.message })
         })
 }
+
 
 module.exports = {
     getAllUsers,
